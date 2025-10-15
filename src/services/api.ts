@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
-// Create axios instance with default config
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -10,7 +9,6 @@ const api = axios.create({
   },
 });
 
-// TypeScript interface for Word data
 export interface Word {
     _id: string;
     class: string,
@@ -47,13 +45,11 @@ export interface Language {
 
 // API service functions
 export const wordService = {
-  // Get all words
   getAllWords: async (): Promise<Word[]> => {
     const response = await api.get<Word[]>('/words');
     return response.data;
   },
 
-  // Get single word by ID
   getWordById: async (id: string): Promise<Word> => {
     const response = await api.get<Word>(`/words/${id}`);
     return response.data;
@@ -67,7 +63,7 @@ export const translationService = {
     },
 
     getTranslationsByLanguage: async (language: string): Promise<Translation[]> => {
-        const response = await api.get<Translation[]>(`/translations/${language}`);
+        const response = await api.get<Translation[]>(`/translations/${language}`); // TO DO: Align language.names to lower case
         return response.data;
     }
 }

@@ -1,0 +1,23 @@
+.wordCard {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 3px solid var(--color-primary-dark);
+    border-radius: 0.5rem;
+    width: 12rem;
+    height: 5rem;
+    margin: 1rem;
+    padding: 1rem;
+    box-shadow: var(--shadow-lg);
+    p {
+        font-style: italic;
+        font-size: x-small;
+    }
+}
+
+/* .translation {
+    display: flex;
+    flex-direction: row;
+} */

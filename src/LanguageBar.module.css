@@ -1,0 +1,31 @@
+.languageBar {
+    width: 100%;
+    color: var(--color-accent);
+    border-top: 3px solid var(--color-primary-dark);
+    border-bottom: 3px solid var(--color-primary-dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h2 {
+        padding: 0rem 1rem;
+        margin: 0.2rem;
+    }
+}
+
+.availableLanguages {
+    display: flex;
+    flex-direction: row;
+}
+
+.languageHeadings {
+    opacity: 0.5;
+}
+.languageHeadings:hover {
+        opacity: 1;
+    }
+
+.selected {
+    color: var(--color-accent-dark);
+    opacity: 1;
+}
