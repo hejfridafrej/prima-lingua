@@ -17,6 +17,10 @@
     }
 }
 
+.wordCard:hover {
+    cursor: pointer;
+}
+
 /* .translation {
     display: flex;
     flex-direction: row;

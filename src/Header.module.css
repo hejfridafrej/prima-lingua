@@ -1,20 +1,13 @@
 
-.main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-}
-
 .header {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    position: sticky;
     width: 100%;
     h1 {
-        margin: 1rem;
-        padding: 1rem
+        margin: 1vw;
+        padding: 1vw;
     }
 }

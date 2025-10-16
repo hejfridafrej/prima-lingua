@@ -1,14 +1,14 @@
-import { LanguageProvider } from './LanguageContext';
+
 import Vocabulary from './Vocabulary';
 import Header from './Header';
-
+import styles from './App.module.css'
 
 function App() {
   return (
-    <LanguageProvider>
+    <div className={styles.main}>
       <Header />
       <Vocabulary />
-    </LanguageProvider>
+    </div>
   )
 }
 

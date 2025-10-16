@@ -1,24 +1,23 @@
-import { useState, useEffect } from 'react';
-import { type Language, languageService } from './services/api.ts';
-import styles from "./WordCard.module.css"
+import { useState } from 'react';
 import type { VocabularyItem } from './LanguageContext.tsx';
+import styles from "./WordCard.module.css"
+import { capitalizeWord } from "./utils.tsx";
 
 interface WordCardProps {
   word: VocabularyItem;
 }
 
 const WordCard = ( {word }: WordCardProps) => {
+    const [sourceActive, setSourceActive] = useState(false);
+    const flipCard = () => {
+        setSourceActive(!sourceActive);
+    }
     return (
         <div className={styles.wordCard}>
-            <div key={word.sourceTranslation._id} className={styles.translation}>
-                <span>{word.sourceTranslation.translation}</span>
+            <div key={word.sourceTranslation._id} className={styles.translation} onClick={() => flipCard()}>
+                <span>{sourceActive ? capitalizeWord(word.sourceTranslation.translation) : capitalizeWord(word.targetTranslation.translation)}</span>
                 </div>
-
-            <div key={word.targetTranslation._id} className={styles.translation}>
-
-                <span>{word.targetTranslation.translation}</span>
-            </div>
-            <p>{word.class} | {word.category}</p>
+            <p>{word.class} {(!word.class || !word.category) ? null : ("|")} {word.category}</p>
         </div>
     )
 }
