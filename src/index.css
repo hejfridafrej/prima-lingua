@@ -1,5 +1,4 @@
 :root {
-  /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; */
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
@@ -91,7 +90,6 @@ h2 {
 
 button {
   border-radius: 2rem;
-  /* border: 1px solid var(--color-border); */
   border: none;
   padding: 0.6em 1.2em;
   font-size: 1em;
@@ -100,7 +98,6 @@ button {
   background-color: var(--color-primary-dark);
   color: var(--color-accent);
   cursor: pointer;
-  /* transition: border-color 0.25s; */
   box-shadow: var(--shadow-md);
 -webkit-box-shadow: var(--shadow-md);
 -moz-box-shadow: var(--shadow-md);
@@ -115,16 +112,3 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-
-/* @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: bisque;
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
-} */

@@ -13,9 +13,11 @@ const WordCard = ( {word }: WordCardProps) => {
         setSourceActive(!sourceActive);
     }
     return (
-        <div className={styles.wordCard}>
-            <div key={word.sourceTranslation._id} className={styles.translation} onClick={() => flipCard()}>
-                <span>{sourceActive ? capitalizeWord(word.sourceTranslation.translation) : capitalizeWord(word.targetTranslation.translation)}</span>
+        <div className={`${styles.wordCard} ${sourceActive ? styles.flipped : ""}`} onClick={() => flipCard()}>
+            <div key={word.sourceTranslation._id} className={styles.translation}>
+                <div className={styles.wordData}>
+                    <span>{sourceActive ? capitalizeWord(word.sourceTranslation.translation) : capitalizeWord(word.targetTranslation.translation)}</span>
+                </div>
                 </div>
             <p>{word.class} {(!word.class || !word.category) ? null : ("|")} {word.category}</p>
         </div>

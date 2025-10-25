@@ -1,17 +1,14 @@
 
-.main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    overflow: scroll;
+.vocabularyBox::-webkit-scrollbar {
+  display: none;
 }
-
 .vocabularyBox {
     display: flex;
+    flex: 2;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    width: 80%;
+    width: 800px;
+    overflow: scroll;
 }

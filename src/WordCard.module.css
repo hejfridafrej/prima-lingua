@@ -4,24 +4,34 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    border: 3px solid var(--color-primary-dark);
     border-radius: 0.5rem;
     width: 12rem;
     height: 5rem;
     margin: 1rem;
     padding: 1rem;
     box-shadow: var(--shadow-lg);
+    background-color: rgb(from var(--color-primary-dark) r g b / 0.5);
+    transition-delay: 0.3s;
+    transition-property: transform, transition-duration;
     p {
-        font-style: italic;
         font-size: x-small;
     }
 }
 
-.wordCard:hover {
-    cursor: pointer;
+.flipped {
+    background-color: var( --color-accent);
+    color: var(--color-primary-dark)
 }
 
-/* .translation {
+.wordCard:hover {
+    cursor: pointer;
+    transform: scale(105%);
+    transition-duration: 0.5s;
+}
+
+.wordData {
     display: flex;
     flex-direction: row;
-} */
+    width: 100%;
+
+}

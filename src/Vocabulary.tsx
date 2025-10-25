@@ -7,7 +7,7 @@ function Vocabulary() {
   const { vocabulary, isLoadingVocabulary } = useLanguage();
 
   return (
-        <div className={styles.main}>
+        <>
           {isLoadingVocabulary ? (
             <h3>Loading...</h3> // TODO: Change to animate between languages
           ) : (
@@ -17,7 +17,7 @@ function Vocabulary() {
               ))}
             </div>
           )}
-    </div>
+        </>
   )
 }
 
