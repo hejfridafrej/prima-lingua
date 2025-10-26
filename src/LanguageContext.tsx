@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { translationService, wordService, type Translation, type Language, type Word, languageService } from './services/api.ts';
+import { ApiError, TranslationsNotFoundError, NoMatchingTranslationsError } from './errors.ts';
 
 interface LanguageContextType {
     availableLanguages: Language[] | null;
@@ -7,6 +8,8 @@ interface LanguageContextType {
     targetLanguage: string;
     vocabulary: VocabularyItem[];
     isLoadingVocabulary: boolean;
+    isLoadingLanguages: boolean;
+    error: string | null;
     setSourceLanguage: (lang: string) => void;
     setTargetLanguage: (lang: string) => void;
     refreshVocabulary: () => Promise<void>;
@@ -31,11 +34,14 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const [vocabulary, setVocabulary] = useState<VocabularyItem[]>([]);
     const [sourceVocabulary, setSourceVocabulary] = useState<Translation[]>([]);
     const [targetVocabulary, setTargetVocabulary] = useState<Translation[]>([])
+    const [isInitialized, setIsInitialized] = useState(false);
+    const [isLoadingLanguages, setIsLoadingLanguages] = useState(false);
     const [isLoadingVocabulary, setIsLoadingVocabulary] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const fetchLanguages = async () => {
+        setIsLoadingLanguages(true);
+        setError(null);
         try {
             let languages = await languageService.getAllLanguages();
             if (languages.length > 0) {
@@ -44,31 +50,29 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
                 setError('No languages found');
             }
         } catch (e) {
-            setError(e instanceof Error ? e.message : 'Failed to fetch languages')
+            setError(e instanceof Error ? e.message : 'Failed to fetch languages');
+        } finally {
+            setIsLoadingLanguages(false);
+            setIsInitialized(true);
         }
     }
 
     const fetchTranslationVocabulary = async () => {
-        try {
-            const sourceLanguageObject = await languageService.getLanguageByName(sourceLanguage);
-            let sourceVocab = await translationService.getTranslationsByLanguage(sourceLanguageObject.short_name);
-            sourceVocab = sourceVocab.filter((vocabularyItem) => vocabularyItem.translation);
+        const sourceLanguageObject = await languageService.getLanguageByName(sourceLanguage);
+        let sourceVocab = await translationService.getTranslationsByLanguage(sourceLanguageObject.short_name);
+        sourceVocab = sourceVocab.filter((vocabularyItem) => vocabularyItem.translation);
 
-            const targetLanguageObject = await languageService.getLanguageByName(targetLanguage);
-            let targetVocab = await translationService.getTranslationsByLanguage(targetLanguageObject.short_name);
-            targetVocab = targetVocab.filter((vocabularyItem) => vocabularyItem.translation);
+        const targetLanguageObject = await languageService.getLanguageByName(targetLanguage);
+        let targetVocab = await translationService.getTranslationsByLanguage(targetLanguageObject.short_name);
+        targetVocab = targetVocab.filter((vocabularyItem) => vocabularyItem.translation);
 
-            if (sourceVocab) {
-                setSourceVocabulary(sourceVocab);
-            }
-            if (targetVocab) {
-                setTargetVocabulary(targetVocab);
-            }
-            return { source: sourceVocab, target: targetVocab }
-        } catch (e) {
-            console.error("Error details:", e);
-            setError(e instanceof Error ? e.message : 'Failed to fetch languages')
+        if (sourceVocab.length) {
+            setSourceVocabulary(sourceVocab);
         }
+        if (targetVocab.length) {
+            setTargetVocabulary(targetVocab);
+        }
+        return { source: sourceVocab, target: targetVocab }
     }
 
     const createVocabulary = async (sourceVocabulary: Translation[], targetVocabulary: Translation[]): Promise<VocabularyItem[]> => {
@@ -91,13 +95,24 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             }) || []
         );
         // Filter out null values
-        return paired.filter((item): item is VocabularyItem => item !== null);
+        const vocabulary = paired.filter((item): item is VocabularyItem => item !== null);
+        if (vocabulary.length === 0) {
+            throw new NoMatchingTranslationsError(sourceLanguage, targetLanguage);
+        }
+        return vocabulary;
     }
 
     const refreshVocabulary = async () => {
+        if (!sourceLanguage || !targetLanguage) {
+            return;
+        }
+        if (sourceLanguage === targetLanguage) {
+            setError('Source and target languages must be different');
+            return;
+        }
         setIsLoadingVocabulary(true);
+        setError(null);
         try {
-
             const result = await fetchTranslationVocabulary()
             if (!result) {
                 return;
@@ -105,33 +120,33 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             const { source, target } = result;
             const vocab = await createVocabulary(source, target);
             setVocabulary(vocab);
-
-        } catch (err) {
-            setError('Failed to load vocabulary');
-            console.error(err);
+        } catch (err: any) {
+            if (err instanceof TranslationsNotFoundError || err instanceof NoMatchingTranslationsError || err instanceof ApiError) {
+                setError(err.message);
+            } else {
+                setError(err instanceof Error ? err.message : 'Failed to load vocabulary');
+            }
+            console.error('Vocabulary loading error:', err);
         } finally {
             setIsLoadingVocabulary(false);
         }
     }
 
     useEffect(() => {
-        try {
-            fetchLanguages();
-            createVocabulary(sourceVocabulary, targetVocabulary)
-        } catch (e) {
-            setError('Failed to load vocabulary');
-            console.error(e);
-        }
-    }, [])
+        fetchLanguages();
+    }, []);
+
 
     useEffect(() => {
-        try {
-            refreshVocabulary();
-        } catch (e) {
-            setError('Failed to refresh vocabulary')
-            console.error(e);
+        if (!isInitialized) {
+            return;
         }
-    }, [sourceLanguage, targetLanguage]);
+        if (!sourceLanguage || !targetLanguage) {
+            setVocabulary([]);
+            return;
+        }
+        refreshVocabulary();
+    }, [sourceLanguage, targetLanguage, isInitialized]);
 
     const setLanguages = (source: string, target: string) => {
         setSourceLanguage(source);
@@ -146,11 +161,10 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             sourceLanguage,
             targetLanguage,
             vocabulary,
-            isLoading, // TO DO: Check usage
             error,
             setLanguages,
         }),
-        [sourceLanguage, targetLanguage, vocabulary, isLoading, error]
+        [sourceLanguage, targetLanguage, vocabulary, error]
     );
 
     return (
@@ -160,6 +174,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             targetLanguage,
             vocabulary,
             isLoadingVocabulary,
+            isLoadingLanguages,
+            error,
             setSourceLanguage,
             setTargetLanguage,
             refreshVocabulary,

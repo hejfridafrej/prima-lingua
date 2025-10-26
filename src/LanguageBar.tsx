@@ -6,17 +6,11 @@ const LanguageBar = () => {
     const { availableLanguages, sourceLanguage, targetLanguage, setLanguages } = useLanguage();
 
     const selectSourceLanguage = (language: Language) => {
-        if (language.name === targetLanguage) {
-            return;
-        }
         setLanguages(language.name, targetLanguage);
         return;
     }
 
     const selectTargetLanguage = (language: Language) => {
-        if (language.name === sourceLanguage) {
-            return;
-        }
         setLanguages(sourceLanguage, language.name);
     }
 
