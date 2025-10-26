@@ -1,6 +1,7 @@
 
 import Vocabulary from './Vocabulary';
 import Header from './Header';
+import Footer from './Footer'
 import styles from './App.module.css'
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
     <div className={styles.main}>
       <Header />
       <Vocabulary />
+      <Footer />
     </div>
   )
 }

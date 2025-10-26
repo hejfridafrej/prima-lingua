@@ -4,6 +4,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: var(--color-primary-dark);
     position: sticky;
     width: 100%;
     h1 {

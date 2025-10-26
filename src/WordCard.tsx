@@ -7,7 +7,7 @@ interface WordCardProps {
   word: VocabularyItem;
 }
 
-const WordCard = ( {word }: WordCardProps) => {
+const WordCard = ( { word }: WordCardProps) => {
     const [sourceActive, setSourceActive] = useState(false);
     const flipCard = () => {
         setSourceActive(!sourceActive);

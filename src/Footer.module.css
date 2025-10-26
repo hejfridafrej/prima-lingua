@@ -1,0 +1,23 @@
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 8vh;
+    background-color: var(--color-primary-dark);
+}
+
+.linkContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 20%
+}
+
+.icon {
+    svg {
+        height: 30px;
+        width: 30px;
+        fill: var(--color-accent);
+    }
+}
