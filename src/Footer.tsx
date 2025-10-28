@@ -18,7 +18,7 @@ const Footer = ({ }) => {
         <div className={styles.footer}>
             <div className={styles.linkContainer}>
             {linkData.map((linkObject) =>
-                <a href={linkObject.link} key={linkObject.name}>
+                <a  key={linkObject.name} href={linkObject.link} target="_blank">
                     <div className={styles.icon}>
                         {linkObject.Icon}
                     </div>

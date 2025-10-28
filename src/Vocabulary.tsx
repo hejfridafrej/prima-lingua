@@ -9,7 +9,7 @@ function Vocabulary() {
   return (
     <div className={styles.vocabularyBox}>
       {isLoadingVocabulary ? (
-        <h3>Loading...</h3>
+        <h2>Loading vocabulary...</h2>
       ) :
         error ? (<h3>Error: {error}</h3>) :
           vocabulary?.map((word) => (
