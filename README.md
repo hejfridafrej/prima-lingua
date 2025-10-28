@@ -1,73 +1,102 @@
-# React + TypeScript + Vite
+# Prima Lingua
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> A language learning application focused on mastering the essential ~1000 words in any language through interactive flashcards and gamified learning.
 
-Currently, two official plugins are available:
+[![React](https://img.shields.io/badge/React-18+-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5+-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5+-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 📚 About Prima Lingua
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Prima Lingua is a vocabulary-focused language learning application built around the concept that learning the first ~650-1000 words in a language provides a strong foundation for fluency. 
+### Key Features
 
-## Expanding the ESLint configuration
+- **Bilingual Flashcard System** - Select your source language (known) and target language (learning)
+- **Categorized Vocabulary** - Words organized into intuitive categories
+- **Interactive Learning** - Flip-card interface for active recall practice
+- **Progress Tracking** - Monitor your learning journey and achievements _(in development)_
+- **Word Classes** - Vocabulary tagged by grammatical class (verb, noun, adjective, etc.)
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Node.js** (v18 or higher)
+- **npm** or **yarn**
+- Access to the [Prima Lingua backend API](http://prima-lingua-api.onrender.com/api/)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd prima-lingua-frontend
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables**
+   
+   Create a `.env` file in the root directory:
+   ```bash
+   # Local development
+   VITE_API_URL=http://localhost:3000/api
+   
+   # Production
+   # VITE_API_URL=http://prima-lingua-api.onrender.com/api
+   ```
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+   The app will be available at `http://localhost:5173`
+
+### Build for Production
+
+```bash
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The optimized production build will be output to the `dist/` directory.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🏗️ Project Architecture
+
+### Tech Stack
+
+- **React 18+** - UI library
+- **TypeScript** - Type safety and better developer experience
+- **Vite** - Fast build tool and dev server
+- **Axios** - HTTP client for API requests
+- **React Context API** - State management
+
+---
+
+## 🤝 Related Repositories
+
+- **Backend API**: [prima-lingua-backend](https://github.com/hejfridafrej/prima-lingua-BE)
+- **Database**: MongoDB Atlas
+
+## 🗺️ Roadmap
+
+### Current Phase
+- [x] Basic flashcard display
+- [x] Language selection
+- [x] Vocabulary fetching by language pair
+
+### Planned Features
+- [ ] Category-based color coding
+- [ ] Gamification elements (streaks, achievements)
+- [ ] User authentication
+- [ ] Custom deck creation
+- [ ] Progress tracking and statistics
+- [ ] Mobile app version
