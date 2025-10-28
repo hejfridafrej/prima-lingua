@@ -32,8 +32,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         () => localStorage.getItem('targetLanguage') || 'Spanish'
     );
     const [vocabulary, setVocabulary] = useState<VocabularyItem[]>([]);
-    const [sourceVocabulary, setSourceVocabulary] = useState<Translation[]>([]);
-    const [targetVocabulary, setTargetVocabulary] = useState<Translation[]>([])
     const [isInitialized, setIsInitialized] = useState(false);
     const [isLoadingLanguages, setIsLoadingLanguages] = useState(false);
     const [isLoadingVocabulary, setIsLoadingVocabulary] = useState(false);
@@ -59,19 +57,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
     const fetchTranslationVocabulary = async () => {
         const sourceLanguageObject = await languageService.getLanguageByName(sourceLanguage);
-        let sourceVocab = await translationService.getTranslationsByLanguage(sourceLanguageObject.short_name);
+        let sourceVocab = await translationService.getTranslationsByLanguage(sourceLanguageObject.name);
         sourceVocab = sourceVocab.filter((vocabularyItem) => vocabularyItem.translation);
 
         const targetLanguageObject = await languageService.getLanguageByName(targetLanguage);
-        let targetVocab = await translationService.getTranslationsByLanguage(targetLanguageObject.short_name);
+        let targetVocab = await translationService.getTranslationsByLanguage(targetLanguageObject.name);
         targetVocab = targetVocab.filter((vocabularyItem) => vocabularyItem.translation);
-
-        if (sourceVocab.length) {
-            setSourceVocabulary(sourceVocab);
-        }
-        if (targetVocab.length) {
-            setTargetVocabulary(targetVocab);
-        }
         return { source: sourceVocab, target: targetVocab }
     }
 
@@ -155,20 +146,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('targetLanguage', target);
     };
 
-    const value = useMemo(
+    const value: LanguageContextType = useMemo(
         () => ({
-            availableLanguages,
-            sourceLanguage,
-            targetLanguage,
-            vocabulary,
-            error,
-            setLanguages,
-        }),
-        [sourceLanguage, targetLanguage, vocabulary, error]
-    );
-
-    return (
-        <LanguageContext.Provider value={{
             availableLanguages,
             sourceLanguage,
             targetLanguage,
@@ -180,7 +159,18 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             setTargetLanguage,
             refreshVocabulary,
             setLanguages
-        }}>
+        }), [
+        availableLanguages,
+        sourceLanguage,
+        targetLanguage,
+        vocabulary,
+        isLoadingVocabulary,
+        isLoadingLanguages,
+        error
+    ]);
+
+    return (
+        <LanguageContext.Provider value={value}>
             {children}
         </LanguageContext.Provider>
     );

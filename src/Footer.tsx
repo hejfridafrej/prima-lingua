@@ -1,15 +1,9 @@
-import JiraIcon from './assets/jira-icon.svg?react'
 import GithubIcon from './assets/github-icon.svg?react'
 import LinkedinIcon from './assets/linkedin-icon.svg?react'
 import styles from './Footer.module.css'
 
 const Footer = ({ }) => {
     const linkData = [
-        {
-            name: "Jira",
-            link: "https://fridafrej.atlassian.net/jira/software/c/projects/PRIMA/boards/34",
-            Icon: <JiraIcon />
-        },
         {
             name: "Github",
             link: "https://github.com/hejfridafrej/prima-lingua",

@@ -1,5 +1,6 @@
 .languageBar {
     width: 100%;
+    flex: 1;
     color: var(--color-accent);
     background-color: var(--color-primary-dark);
     display: flex;
