@@ -6,12 +6,12 @@ const LanguageBar = () => {
     const { availableLanguages, sourceLanguage, targetLanguage, isLoadingLanguages, setLanguages } = useLanguage();
 
     const selectSourceLanguage = (language: Language) => {
-        setLanguages(language.name, targetLanguage);
+        setLanguages(language._id, targetLanguage);
         return;
     }
 
     const selectTargetLanguage = (language: Language) => {
-        setLanguages(sourceLanguage, language.name);
+        setLanguages(sourceLanguage, language._id);
     }
 
     return (
@@ -22,13 +22,13 @@ const LanguageBar = () => {
                 <>
                     <div className={styles.availableLanguages}>
                         {availableLanguages?.map((language) => (
-                            <h2 key={language._id} className={`${styles.languageHeadings} ${language.name == sourceLanguage ? styles.selected : ""}`} onClick={() => selectSourceLanguage(language)}>{language.name}</h2>
+                            <h2 key={language._id} className={`${styles.languageHeadings} ${language._id == sourceLanguage ? styles.selected : ""}`} onClick={() => selectSourceLanguage(language)}>{language.name}</h2>
                         ))}
                     </div>
                     <h2>to</h2>
                     <div className={styles.availableLanguages}>
                         {availableLanguages?.map((language) => (
-                            <h2 key={language._id} className={`${styles.languageHeadings} ${language.name == targetLanguage ? styles.selected : ""}`} onClick={() => selectTargetLanguage(language)}>{language.name}</h2>
+                            <h2 key={language._id} className={`${styles.languageHeadings} ${language._id == targetLanguage ? styles.selected : ""}`} onClick={() => selectTargetLanguage(language)}>{language.name}</h2>
                         ))}
                     </div>
                 </>

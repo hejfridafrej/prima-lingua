@@ -26,10 +26,10 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const [availableLanguages, setAvailableLanguages] = useState<Language[] | null>(null);
     const [sourceLanguage, setSourceLanguage] = useState<string>(
-        () => localStorage.getItem('sourceLanguage') || 'English'
+        () => localStorage.getItem('sourceLanguage') || '68e6b3b7db3b5d40c552cae5'
     );
     const [targetLanguage, setTargetLanguage] = useState<string>(
-        () => localStorage.getItem('targetLanguage') || 'Spanish'
+        () => localStorage.getItem('targetLanguage') || '68e6b3b7db3b5d40c552cae7'
     );
     const [vocabulary, setVocabulary] = useState<VocabularyItem[]>([]);
     const [isInitialized, setIsInitialized] = useState(false);
@@ -56,12 +56,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     }
 
     const fetchTranslationVocabulary = async () => {
-        const sourceLanguageObject = await languageService.getLanguageByName(sourceLanguage);
-        let sourceVocab = await translationService.getTranslationsByLanguage(sourceLanguageObject.name);
+        const sourceLanguageObject = await languageService.getLanguageById(sourceLanguage);
+        let sourceVocab = await translationService.getTranslationsByLanguage(sourceLanguageObject._id);
         sourceVocab = sourceVocab.filter((vocabularyItem) => vocabularyItem.translation);
 
-        const targetLanguageObject = await languageService.getLanguageByName(targetLanguage);
-        let targetVocab = await translationService.getTranslationsByLanguage(targetLanguageObject.name);
+        const targetLanguageObject = await languageService.getLanguageById(targetLanguage);
+        let targetVocab = await translationService.getTranslationsByLanguage(targetLanguageObject._id);
         targetVocab = targetVocab.filter((vocabularyItem) => vocabularyItem.translation);
         return { source: sourceVocab, target: targetVocab }
     }

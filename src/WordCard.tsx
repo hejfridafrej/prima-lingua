@@ -19,7 +19,7 @@ const WordCard = ( { word }: WordCardProps) => {
                     <span>{sourceActive ? capitalizeWord(word.sourceTranslation.translation) : capitalizeWord(word.targetTranslation.translation)}</span>
                 </div>
                 </div>
-            <p>{word.class} {(!word.class || !word.category) ? null : ("|")} {word.category}</p>
+            <p>{word.class && word?.class.name} {(!word.class || !word.category) ? null : ("|")} {word.category && word.category.name}</p>
         </div>
     )
 }

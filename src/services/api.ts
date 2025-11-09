@@ -10,26 +10,32 @@ const api = axios.create({
   },
 });
 
+export interface Class {
+  _id: string;
+  name: string;
+  description?: string;
+  enabled: boolean;
+}
+
+export interface Category {
+  _id: string;
+  name: string;
+  description?: string;
+  enabled: boolean;
+}
+
 export interface Word {
   _id: string;
-  class: string,
-  category: string,
-  identifier: string,
-  // createdAt: {
-  //     type: Date,
-  //     default: Date.now
-  // }
+  identifier: string;
+  class?: Class | null;
+  category?: Category | null;
 }
 
 export interface Translation {
   _id: string;
-  word_id: string,
-  language: string,
+  word_id: Word,
+  language: Language,
   translation: string,
-  // createdAt: {
-  //   type: Date,
-  //   default: Date.now
-  // }
 }
 
 export interface Language {
@@ -38,10 +44,6 @@ export interface Language {
   name: string,
   native_name: string,
   enabled: boolean,
-  // createdAt: {
-  //   type: Date,
-  //   default: Date.now
-  // }
 }
 
 // API service functions
@@ -86,7 +88,7 @@ export const languageService = {
     const response = await api.get<Language[]>('/languages');
     return response.data;
   },
-  getLanguageByName: async (language: string): Promise<Language> => {
+  getLanguageById: async (language: string): Promise<Language> => {
     const response = await api.get<Language>(`/languages/${language}`);
     return response.data;
   }
