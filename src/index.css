@@ -115,5 +115,5 @@ button:hover {
 }
 
 button:focus-visible {
-  outline: 1px auto var(--color-accent);
+  outline: none;
 }
