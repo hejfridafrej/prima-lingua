@@ -1,14 +1,23 @@
 
 .header {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
-    flex-direction: column;
+    justify-content: space-between;
     background-color: var(--color-primary-dark);
     position: sticky;
     width: 100%;
     h1 {
         margin: 1vw;
         padding: 1vw;
+    }
+}
+
+.appName {
+    display: flex;
+    flex-direction: column;
+    h1 {
+        padding: 0px 1rem;
+        margin: 0px;
     }
 }

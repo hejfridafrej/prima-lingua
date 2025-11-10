@@ -1,0 +1,15 @@
+.navigation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.navButton {
+    font-weight: 200;
+    color: var(--color-accent-dark);
+}
+
+.selected {
+    font-weight: bolder;
+    color: var(--color-accent);
+}

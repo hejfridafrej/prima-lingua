@@ -1,17 +1,16 @@
-import { type Language } from './services/api';
 import { useLanguage } from './LanguageContext';
 import styles from './LanguageBar.module.css'
 
 const LanguageBar = () => {
     const { availableLanguages, sourceLanguage, targetLanguage, isLoadingLanguages, setLanguages } = useLanguage();
 
-    const selectSourceLanguage = (language: Language) => {
-        setLanguages(language._id, targetLanguage);
+    const selectSourceLanguage = (languageId: string) => {
+        setLanguages(languageId, targetLanguage);
         return;
     }
 
-    const selectTargetLanguage = (language: Language) => {
-        setLanguages(sourceLanguage, language._id);
+    const selectTargetLanguage = (languageId: string) => {
+        setLanguages(sourceLanguage, languageId);
     }
 
     return (
@@ -20,16 +19,20 @@ const LanguageBar = () => {
                 <h2> Loading languages...</h2>
             ) : (
                 <>
-                    <div className={styles.availableLanguages}>
-                        {availableLanguages?.map((language) => (
-                            <h2 key={language._id} className={`${styles.languageHeadings} ${language._id == sourceLanguage ? styles.selected : ""}`} onClick={() => selectSourceLanguage(language)}>{language.name}</h2>
-                        ))}
+                    <div className={styles.languageDropdown}>
+                        <select className={styles.hiddenInput} onChange={(e) => selectSourceLanguage(e.target.value)} name="sourceLanguage" id="sourceLanguage" value={sourceLanguage}>
+                            {availableLanguages?.map((language) => (
+                                <option key={language._id} className={styles.option} value={language._id}>{language.name}</option>
+                            ))}
+                        </select>
                     </div>
                     <h2>to</h2>
-                    <div className={styles.availableLanguages}>
-                        {availableLanguages?.map((language) => (
-                            <h2 key={language._id} className={`${styles.languageHeadings} ${language._id == targetLanguage ? styles.selected : ""}`} onClick={() => selectTargetLanguage(language)}>{language.name}</h2>
-                        ))}
+                    <div className={styles.languageDropdown}>
+                        <select className={styles.hiddenInput} onChange={(e) => selectTargetLanguage(e.target.value)} name="targetLanguage" id="targetLanguage" value={targetLanguage}>
+                            {availableLanguages?.map((language) => (
+                                <option key={language._id} value={language._id}>{language.name}</option>
+                            ))}
+                        </select>
                     </div>
                 </>
             )}

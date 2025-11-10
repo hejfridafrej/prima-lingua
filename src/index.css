@@ -55,6 +55,12 @@
   --shadow-sm: 0 1px 2px rgba(128, 0, 32, 0.05);
   --shadow-md: 0 4px 6px rgba(128, 0, 32, 0.1);
   --shadow-lg: 0 10px 15px rgba(128, 0, 32, 0.15);
+
+  /* Width */
+  --width-max: 1200px;
+  --width-content: 800px;
+  --width-narrow: 600px;
+  --width-sidebar: 300px;
 }
 
 a {
@@ -108,7 +114,6 @@ button:hover {
   background-color: var(--color-primary-dark);
 }
 
-button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 1px auto var(--color-accent);
 }
