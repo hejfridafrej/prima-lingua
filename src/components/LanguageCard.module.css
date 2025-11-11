@@ -1,4 +1,4 @@
-.wordCard {
+.languageCard {
     display: flex;
     position: relative;
     justify-content: center;
@@ -11,9 +11,20 @@
     padding: 2rem;
     box-shadow: var(--shadow-lg);
     background-color: rgb(from var(--color-primary-dark) r g b / 0.5);
-    transition-delay: 0.3s;
-    transition-property: transform, transition-duration;
     p {
         font-size: small;
+        font-style: italic;
+    }
+}
+
+.languageNames {
+    display: flex;
+    flex-direction: column;
+    flex: 1;    
+    align-items: center;
+    justify-content: center;
+    h2, h4 {
+        margin: 0;
+        padding: 0;
     }
 }
