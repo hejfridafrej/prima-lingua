@@ -53,8 +53,8 @@ export const wordService = {
     return response.data;
   },
 
-  getWordById: async (id: string): Promise<Word> => {
-    const response = await api.get<Word>(`/words/${id}`);
+  getWordById: async (word: Word): Promise<Word> => { // TODO: Consider renaming
+    const response = await api.get<Word>(`/words/${word}`);
     return response.data;
   },
 };

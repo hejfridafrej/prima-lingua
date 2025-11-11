@@ -1,4 +1,4 @@
-import { useLanguage } from './LanguageContext';
+import { useLanguage } from '../LanguageContext';
 import styles from './LanguageBar.module.css'
 
 const LanguageBar = () => {

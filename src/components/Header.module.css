@@ -5,8 +5,7 @@
     align-items: center;
     justify-content: space-between;
     background-color: var(--color-primary-dark);
-    position: sticky;
-    width: 100%;
+    width: 100vw;
     h1 {
         margin: 1vw;
         padding: 1vw;

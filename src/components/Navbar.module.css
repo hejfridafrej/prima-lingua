@@ -4,6 +4,11 @@
     align-items: center;
 }
 
+.navItem {
+    display: flex;
+    justify-content: center;
+}
+
 .navButton {
     font-weight: 200;
     color: var(--color-accent-dark);

@@ -3,6 +3,7 @@
 }
 .languagePage {
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -12,7 +13,7 @@
 
 .languageGrid {
   display: grid;
-  grid-template-columns: 20rem 20rem; /* 2 columns */
+  grid-template-columns: 22rem 22rem; /* 2 columns */
   grid-gap: 20px;
 }
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import type { VocabularyItem } from './LanguageContext.tsx';
+import type { VocabularyItem } from '../LanguageContext.tsx';
 import styles from "./WordCard.module.css"
-import { capitalizeWord } from "./utils.tsx";
+import { capitalizeWord } from "../utils.tsx";
 
 interface WordCardProps {
   word: VocabularyItem;

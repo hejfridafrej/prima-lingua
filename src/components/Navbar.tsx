@@ -12,9 +12,10 @@ const Navbar = () => {
     return (
         <div className={styles.navigation}>
             {routes.map((route, index) => (
-                <>
-                    <button key={route.path} onClick={() => navigate(route.path)} className={`${styles.navButton} ${route.path == location.pathname ? styles.selected : ""}`}>{route.name}</button> {index < routes.length - 1 && <p>|</p>}
-                </>
+                // TODO: Set width to avoid layout shift
+                <div className={styles.navItem} key={route.name}> 
+                    <button onClick={() => navigate(route.path)} className={`${styles.navButton} ${route.path == location.pathname ? styles.selected : ""}`}>{route.name}</button> {index < routes.length - 1 && <p>|</p>}
+                </div>
             ))}
         </div>
     )

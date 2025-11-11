@@ -5,10 +5,16 @@
 .vocabularyBox {
   display: flex;
   flex: 1;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
   width: var(--width-content);
   overflow: scroll;
+}
+
+.wordGrid {
+    display: grid;
+  grid-template-columns: 14rem 14rem 14rem; /* 2 columns */
+  grid-gap: 1rem;
+
 }

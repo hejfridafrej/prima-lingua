@@ -1,5 +1,5 @@
-import GithubIcon from './assets/github-icon.svg?react'
-import LinkedinIcon from './assets/linkedin-icon.svg?react'
+import GithubIcon from '../assets/github-icon.svg?react'
+import LinkedinIcon from '../assets/linkedin-icon.svg?react'
 import styles from './Footer.module.css'
 
 const Footer = ({ }) => {
