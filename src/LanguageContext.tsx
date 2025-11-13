@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
-import { translationService, wordService, type Translation, type Language, type Word, languageService } from './services/api.ts';
+import { wordService, type Word, type Translation, translationService, type Language, languageService, type Category, type Class } from './services/api.ts';
 import { ApiError, TranslationsNotFoundError, NoMatchingTranslationsError } from './errors.ts';
 
 interface LanguageContextType {
@@ -7,6 +7,7 @@ interface LanguageContextType {
     sourceLanguage: string; // TODO: Change to Language?
     targetLanguage: string;
     vocabulary: VocabularyItem[];
+    filterState: string[];
     isLoadingVocabulary: boolean;
     isLoadingLanguages: boolean;
     error: string | null;
@@ -14,6 +15,7 @@ interface LanguageContextType {
     setTargetLanguage: (lang: string) => void;
     refreshVocabulary: () => Promise<void>;
     setLanguages: (source: string, target: string) => void;
+    setFilters: (filter: Category | Class | null) => void;
 }
 
 export interface VocabularyItem extends Word {
@@ -32,6 +34,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         () => localStorage.getItem('targetLanguage') || '68e6b3b7db3b5d40c552cae7'
     );
     const [vocabulary, setVocabulary] = useState<VocabularyItem[]>([]);
+    const [filterState, setFilterState] = useState<string[]>([]);
     const [isInitialized, setIsInitialized] = useState(false);
     const [isLoadingLanguages, setIsLoadingLanguages] = useState(false);
     const [isLoadingVocabulary, setIsLoadingVocabulary] = useState(false);
@@ -146,24 +149,39 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('targetLanguage', target);
     };
 
+    const setFilters = (filter: Category | Class | null ) => {
+        if (!filter) {
+            setFilterState([]);
+            return;
+        }
+        if (filterState.includes(filter.name)) {
+            setFilterState(filterState.filter(c => c !== filter.name));
+            return;
+        }
+        setFilterState([...filterState, filter.name]);
+    };
+
     const value: LanguageContextType = useMemo(
         () => ({
             availableLanguages,
             sourceLanguage,
             targetLanguage,
             vocabulary,
+            filterState,
             isLoadingVocabulary,
             isLoadingLanguages,
             error,
             setSourceLanguage,
             setTargetLanguage,
             refreshVocabulary,
-            setLanguages
+            setLanguages,
+            setFilters
         }), [
         availableLanguages,
         sourceLanguage,
         targetLanguage,
         vocabulary,
+        filterState,
         isLoadingVocabulary,
         isLoadingLanguages,
         error

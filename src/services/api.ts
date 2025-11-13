@@ -94,4 +94,26 @@ export const languageService = {
   }
 }
 
+export const categoryService = {
+  getAllCategories: async (): Promise<Category[]> => {
+    const response = await api.get<Category[]>('/categories');
+    return response.data;
+  },
+  getCategoryById: async (category: Category): Promise<Category> => { // TODO: It's... weird to fetch a category I already have
+    const response = await api.get<Category>(`/categories/${category._id}`);
+    return response.data;
+  }
+}
+
+export const classService = {
+  getAllClasses: async (): Promise<Class[]> => {
+    const response = await api.get<Class[]>('/classes');
+    return response.data;
+  },
+  getClassById: async (singleClass: Class): Promise<Class> => {
+    const response = await api.get<Class>(`/classes/${singleClass._id}`);
+    return response.data;
+  }
+}
+
 export default api;

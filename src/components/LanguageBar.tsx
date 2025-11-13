@@ -26,7 +26,7 @@ const LanguageBar = () => {
                             ))}
                         </select>
                     </div>
-                    <h2>to</h2>
+                    <h4>to</h4>
                     <div className={styles.languageDropdown}>
                         <select className={styles.hiddenInput} onChange={(e) => selectTargetLanguage(e.target.value)} name="targetLanguage" id="targetLanguage" value={targetLanguage}>
                             {availableLanguages?.map((language) => (

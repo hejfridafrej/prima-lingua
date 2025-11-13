@@ -22,10 +22,17 @@
     color: var(--color-accent);
     font-size: var(--font-size-medium);
     border: none;
-    height: 4rem;
-    width: 5rem;
+    height: 2rem;
+    /* width: 4rem; */
     margin: 0rem 0.5rem;
 }
+.languageDropdown select:hover {
+    cursor: pointer;
+}
+.languageDropdown select:focus-visible {
+  outline: none;
+}
+
 
 /* .hiddenInput {
     background-color: var(--color-primary-dark);

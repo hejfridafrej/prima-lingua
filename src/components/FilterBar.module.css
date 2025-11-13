@@ -1,0 +1,22 @@
+.filterBar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.filterDropdown select {
+    appearance: none;
+    background-color: var(--color-primary-dark);
+    color: var(--color-accent);
+    font-size: var(--font-size-medium);
+    border: none;
+    height: 2rem;
+    /* width: 4rem; */
+    margin: 0rem 0.5rem;
+}
+.filterDropdown select:hover {
+    cursor: pointer;
+}
+.filterDropdown select:focus-visible {
+  outline: none;
+}
