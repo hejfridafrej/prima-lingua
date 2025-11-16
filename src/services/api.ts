@@ -27,8 +27,8 @@ export interface Category {
 export interface Word {
   _id: string;
   identifier: string;
-  class?: Class | null;
-  category?: Category | null;
+  class: Class;
+  category: Category;
 }
 
 export interface Translation {

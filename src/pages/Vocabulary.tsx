@@ -10,12 +10,16 @@ function Vocabulary() {
   const [filteredVocab, setFilteredVocab] = useState<VocabularyItem[]>(vocabulary);
 
   const generateFilteredVocabulary = () => {
-    if (filterState.length === 0) {
-      return vocabulary;
-    }
-    return vocabulary.filter((word) =>
-      word.category && filterState.includes(word.category.name)
-    );
+    const filteredVocabulary = vocabulary.filter(item => {
+      const categoryMatch = filterState.categories.length === 0 ||
+        filterState.categories.some(cat => cat.name === item.category.name);
+
+      const classMatch = filterState.classes.length === 0 ||
+        filterState.classes.some(cls => cls.name === item.class.name);
+
+      return categoryMatch && classMatch;
+    })
+    return filteredVocabulary;
   }
 
   useEffect(() => {
