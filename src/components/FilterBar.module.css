@@ -4,19 +4,43 @@
     margin-bottom: 1rem;
 }
 
+.filterDropdown {
+    position: relative;
+    width: 4rem;
+}
+
 .filterDropdown select {
-    appearance: none;
+    display: none;
+    /* appearance: none;
     background-color: var(--color-primary-dark);
     color: var(--color-accent);
     font-size: var(--font-size-medium);
     border: none;
     height: 2rem;
-    /* width: 4rem; */
-    margin: 0rem 0.5rem;
+    margin: 0rem 0.5rem; */
 }
-.filterDropdown select:hover {
+
+/* .filterDropdown select:hover {
     cursor: pointer;
 }
 .filterDropdown select:focus-visible {
   outline: none;
+} */
+
+.initialOption {
+    background-color: aquamarine;
+    display: flex;
 }
+
+.initialOption {
+    background-color: peru;
+      position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+
+
+
