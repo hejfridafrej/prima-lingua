@@ -2,45 +2,15 @@
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
+    justify-content: center;
+    align-items: center;
 }
 
-.filterDropdown {
-    position: relative;
-    width: 4rem;
-}
-
-.filterDropdown select {
-    display: none;
-    /* appearance: none;
-    background-color: var(--color-primary-dark);
-    color: var(--color-accent);
-    font-size: var(--font-size-medium);
-    border: none;
-    height: 2rem;
-    margin: 0rem 0.5rem; */
-}
-
-/* .filterDropdown select:hover {
-    cursor: pointer;
-}
-.filterDropdown select:focus-visible {
-  outline: none;
-} */
-
-.initialOption {
-    background-color: aquamarine;
+.clearButton {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0.5rem;
 }
-
-.initialOption {
-    background-color: peru;
-      position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 99;
-}
-
-
-
-

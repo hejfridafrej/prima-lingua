@@ -19,8 +19,11 @@ interface LanguageContextType {
     setTargetLanguage: (lang: string) => void;
     refreshVocabulary: () => Promise<void>;
     setLanguages: (source: string, target: string) => void;
-    setCategoryFilter: (filter: Category | null) => void;
-    setClassFilter: (filter: Class | null) => void;
+    setCategoryFilter: (filter: Category[] | null) => void;
+    clearCategoryFilter: () => void;
+    setClassFilter: (filter: Class[] | null) => void;
+    clearClassFilter: () => void;
+
 }
 
 export interface VocabularyItem extends Word {
@@ -155,39 +158,39 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('targetLanguage', target);
     };
 
-    const setCategoryFilter = (category: Category | null) => {
+    const setCategoryFilter = (category: Category[] | null) => {
         if (!category) {
             setFilterState(prev => ({ ...prev, categories: [] }));
             return;
         }
 
         setFilterState(prev => {
-            const exists = prev.categories.some(c => c.name === category.name);
             return {
-                ...prev,
-                categories: exists
-                    ? prev.categories.filter(c => c.name !== category.name)
-                    : [...prev.categories, category]
+                ...prev, categories: category
             };
         });
     };
 
-    const setClassFilter = (classItem: Class | null) => {
-        if (!classItem) {
+    const clearCategoryFilter = () => {
+    setFilterState(prev => ({ ...prev, categories: [] }));
+};
+
+    const setClassFilter = (classItems: Class[] | null) => {
+        if (!classItems) {
             setFilterState(prev => ({ ...prev, classes: [] }));
             return;
         }
 
         setFilterState(prev => {
-            const exists = prev.classes.some(c => c.name === classItem.name);
             return {
                 ...prev,
-                classes: exists
-                    ? prev.classes.filter(c => c.name !== classItem.name)
-                    : [...prev.classes, classItem]
-            };
+                classes: classItems};
         });
     };
+
+    const clearClassFilter = () => {
+    setFilterState(prev => ({ ...prev, classes: [] }));
+};
 
     const value: LanguageContextType = useMemo(
         () => ({
@@ -204,7 +207,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             refreshVocabulary,
             setLanguages,
             setCategoryFilter, 
-            setClassFilter
+            clearCategoryFilter,
+            setClassFilter,
+            clearClassFilter
         }), [
         availableLanguages,
         sourceLanguage,

@@ -2,20 +2,18 @@ import { useEffect, useState } from 'react';
 import { categoryService, type Category, classService, type Class } from '../services/api';
 import { useLanguage } from '../LanguageContext';
 import CustomSelect from './CustomSelect';
+import type { SelectOption } from './CustomSelect';
+import Close from "../assets/close.svg?react"
 import styles from './FilterBar.module.css';
 
-export interface SelectOption {
-    value: string;
-    label: string;
-}
 const FilterBar = () => {
-    const { setCategoryFilter, setClassFilter } = useLanguage();
+    const { filterState, setCategoryFilter, clearCategoryFilter, setClassFilter, clearClassFilter } = useLanguage();
     const [categories, setCategories] = useState<Category[]>([]);
     const [categoryOptions, setCategoryOptions] = useState<SelectOption[]>([]);
-    const [currentCategory, setCurrentCategory] = useState<string | null>(null);
+    const selectedCategoryValues = filterState.categories.map(c => c.name);
     const [classes, setClasses] = useState<Class[]>([]);
     const [classOptions, setClassOptions] = useState<SelectOption[]>([]);
-    const [currentClass, setCurrentClass] = useState<string | null>(null);
+    const selectedClassValues = filterState.classes.map(c => c.name);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -26,7 +24,7 @@ const FilterBar = () => {
                     const categoryOptions = foundCategories.map((category) => ({
                         value: category.name,
                         label: category.name
-                    }));
+                    })).sort((a, b) => a.label.localeCompare(b.label));
                     setCategoryOptions(categoryOptions)
                 }
             } catch (error) {
@@ -41,7 +39,7 @@ const FilterBar = () => {
                     const classOptions = foundClasses.map((singleClass) => ({
                         value: singleClass.name,
                         label: singleClass.name
-                    }));
+                    })).sort((a, b) => a.label.localeCompare(b.label));;
                     setClassOptions(classOptions)
                 }
             } catch (error) {
@@ -54,48 +52,45 @@ const FilterBar = () => {
     }, []);
 
 
-    const filterOnCategory = (category: string) => {
-        const cat = categories.find(c => c.name === category);
-        if (!cat) {
-            setCategoryFilter(null);
-            return;
-        }
-        setCategoryFilter(cat);
-        setCurrentCategory(cat.name);
+    const filterOnCategory = (selectedCategories: SelectOption[]) => {
+        const categoryArray: Category[] = categories.filter(category => {
+            const categoryMatch = selectedCategories.some(cat => cat.label === category.name);
+            return categoryMatch;
+        })
+        setCategoryFilter(categoryArray);
     }
 
-    const filterOnClass = (className: string) => {
-        const classFilter = classes.find(c => c.name === className);
-        if (!classFilter) {
-            setClassFilter(null);
-            return;
-        }
-        setClassFilter(classFilter);
-        setCurrentClass(classFilter.name);
+    const filterOnClass = (selectedClasses: SelectOption[]) => {
+        const classArray: Class[] = classes.filter(classItem => {
+            const classMatch = selectedClasses.some(cl => cl.label === classItem.name);
+            return classMatch;
+        })
+        setClassFilter(classArray);
     }
 
     const clearFilters = () => {
-        setCategoryFilter(null);
-        setCurrentCategory('');
-        setClassFilter(null);
-        setCurrentClass('');
+        clearCategoryFilter();
+        clearClassFilter();
+        console.log("FilterBar cleared");
     }
 
     return (
         <div className={styles.filterBar}>
             <CustomSelect
                 options={categoryOptions}
-                value={currentCategory}
+                value={selectedCategoryValues}
                 onChange={filterOnCategory}
-                placeHolder={"Select category"}
+                placeHolder={"Category"}
+                multiSelect
             />
             <CustomSelect
                 options={classOptions}
-                value={currentClass}
+                value={selectedClassValues}
                 onChange={filterOnClass}
-                placeHolder={"Select class"}
+                placeHolder={"Class"}
+                multiSelect
             />
-            <button onClick={() => clearFilters()}>Clear Filter</button>
+            <button className={styles.clearButton} onClick={() => clearFilters()}><Close /></button> {/* TODO: Add icon button */}
         </div>
     )
 };

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useLanguage } from "../LanguageContext";
+import Arrow from "../assets/arrow_forward.svg?react"
 import styles from "./CustomSelect.module.css"
 
 export interface SelectOption {
@@ -7,70 +7,143 @@ export interface SelectOption {
     label: string;
 }
 
+type size = "small" | "medium" | "large";
+
 export interface CustomSelectProps {
     options: SelectOption[];
-    value: string | null;
-    onChange: (value: string) => void;
     placeHolder?: string;
+    outline?: boolean;
+    size?: size;
+}
+
+export interface MultiSelectProps extends CustomSelectProps {
+    multiSelect: true;
+    value: string[];
+    onChange: (value: SelectOption[]) => void;
+}
+
+export interface SingleSelectProps extends CustomSelectProps {
+    multiSelect?: false;
+    value: string | null;
+    onChange: (value: SelectOption) => void;
 }
 
 const CustomSelect = ({
     options,
     value,
     onChange,
-    placeHolder = "Select an option"
-}: CustomSelectProps) => {
+    placeHolder = "Select an option",
+    multiSelect = false,
+    outline = false,
+    size = "medium"
+    // TODO: search prop, disabled prop, sort prop, theme prop, subtitle prop
+}: MultiSelectProps | SingleSelectProps) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [activeOptions, setActiveOptions] = useState<SelectOption[]>([]);
+    const sortedOptions = multiSelect ? [
+        ...options.filter(opt => activeOptions.includes(opt)),
+        ...options.filter(opt => !activeOptions.includes(opt))
+    ] : [...options.filter(opt => !activeOptions.includes(opt))];
     const containerRef = useRef<HTMLDivElement>(null);
-    const selectedOption = options.find(opt => opt.value === value);
-    
+
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
                 setIsOpen(false);
             }
         }
-
         if (isOpen) {
             document.addEventListener('mousedown', handleClickOutside);
             return () => document.removeEventListener('mousedown', handleClickOutside);
         }
-
     }, [isOpen]);
 
-    // TODO: Handle keyboard events
+    useEffect(() => {
+        if (!value) {
+            setActiveOptions([]);
+        } else if (Array.isArray(value)) {
+            const values = options.filter(opt => value.includes(opt.value));
+            setActiveOptions(values)
+        } else {
+            const active = options.filter(opt => opt.value === value);
+            setActiveOptions(active);
+        }
+    }, [value, options])
 
-    function handleSelect(optionValue: string) {
-        onChange(optionValue);
-        setIsOpen(false);
+    // TODO: Accessability: Handle keyboard events
+
+    function handleSelect(optionValue: SelectOption) {
+        if (activeOptions.find((active) => active.value === optionValue.value)) {
+            console.log("Deselecting", optionValue);
+            const selectedValues = activeOptions.filter(active => active.value !== optionValue.value);
+            setActiveOptions(selectedValues);
+        } else if (multiSelect) {
+            console.log("Selecting", optionValue);
+            const selectedValues = activeOptions.some(option => option.value === optionValue.value) ? activeOptions.filter(val => val.value !== optionValue.value) :
+                [...activeOptions, optionValue];
+            setActiveOptions(selectedValues);
+            (onChange as (value: SelectOption[]) => void)(selectedValues);
+        } else {
+            setActiveOptions([optionValue])
+            setIsOpen(false);
+            (onChange as (value: SelectOption) => void)(optionValue);
+        }
+    }
+
+    function placeHolderText() {
+        if (multiSelect && activeOptions.length > 1) {
+            return `${activeOptions[activeOptions.length - 1].label} + ${activeOptions.length - 1}`;
+        } else if (activeOptions.length === 1) {
+            return activeOptions[0].label;
+        }
+        return placeHolder;
     }
 
     return (
-        <div className={styles.customSelectContainer} ref={containerRef}>
+        <div className={`${styles.customSelectContainer} ${size !== "medium" ? (size === "small" ? styles.small : styles.large) : ""}`} ref={containerRef}>
             <button
                 type="button"
-                className={styles.customSelectButton}
+                className={`${styles.customSelectButton} ${outline ? styles.outlined : ""}`}
                 onClick={() => setIsOpen(!isOpen)}
                 disabled={false}
                 aria-haspopup="listbox"
                 aria-expanded={isOpen}>
-                <span>{selectedOption ? selectedOption.label : placeHolder}</span>
+                <span>{placeHolderText()}</span>
+                <Arrow className={`${styles.arrow} ${isOpen ? styles.arrowOpen : ""}`} />
             </button>
             {isOpen && (
-                <ul className={styles.dropDownList}>
-                    {options.map((option) => (
-                        <li
+                <div className={`${styles.dropDownList} ${outline ? styles.outlined : ""}`}>
+                    {sortedOptions.map((option) => (
+                        <label
                             key={option.value}
                             className={styles.option}
-                            onClick={() => handleSelect(option.value)}
                         >
+                            {multiSelect ? (
+                                <input
+                                    type="checkbox"
+                                    className={styles.checkBox}
+                                    value={option.value}
+                                    checked={activeOptions.find((active) => active.value === option.value) ? true : false}
+                                    onClick={() => handleSelect(option)}
+                                />
+                            ) : (
+                                <input
+                                    type="radio"
+                                    name="single-select"
+                                    className={styles.radio}
+                                    checked={value === option.value}
+                                    onChange={() => handleSelect(option)}
+                                />
+
+                            )}
                             {option.label}
-                        </li>
-                    ))}
-                </ul>
+                        </label>
+                    )
+
+                    )}
+                </div>
             )}
         </div>
-
     )
 }
 
