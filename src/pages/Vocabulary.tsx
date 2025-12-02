@@ -40,11 +40,17 @@ function Vocabulary() {
         error ? (<h3>Error: {error}</h3>) : (
           <>
             <FilterBar />
+            {/* TODO: WordGrid blocks other elements (customSelect) if empty */}
+            {/* Vocabulary acts as container & limit other elements - filterbar should be outside */}
+            {filteredVocab.length ? (
             <div className={styles.wordGrid}>
               {filteredVocab?.map((word) => (
                 <WordCard key={word._id} word={word} />
               ))}
             </div>
+            ) : (
+              <h3>No words found</h3>
+            )}
           </>
         )
       }
