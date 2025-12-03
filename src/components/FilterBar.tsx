@@ -21,11 +21,11 @@ const FilterBar = () => {
                 const foundCategories = await categoryService.getAllCategories();
                 setCategories(foundCategories);
                 if (foundCategories.length) {
-                    const categoryOptions = foundCategories.map((category) => ({
+                    const mappedCategoryOptions = foundCategories.map((category) => ({
                         value: category.name,
                         label: category.name
                     })).sort((a, b) => a.label.localeCompare(b.label));
-                    setCategoryOptions(categoryOptions)
+                    setCategoryOptions(mappedCategoryOptions)
                 }
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -36,11 +36,11 @@ const FilterBar = () => {
                 const foundClasses = await classService.getAllClasses();
                 setClasses(foundClasses);
                 if (foundClasses.length) {
-                    const classOptions = foundClasses.map((singleClass) => ({
+                    const mappedClassOptions = foundClasses.map((singleClass) => ({
                         value: singleClass.name,
                         label: singleClass.name
-                    })).sort((a, b) => a.label.localeCompare(b.label));;
-                    setClassOptions(classOptions)
+                    })).sort((a, b) => a.label.localeCompare(b.label));
+                    setClassOptions(mappedClassOptions)
                 }
             } catch (error) {
                 console.error('Error fetching classes:', error);
@@ -71,7 +71,6 @@ const FilterBar = () => {
     const clearFilters = () => {
         clearCategoryFilter();
         clearClassFilter();
-        console.log("FilterBar cleared");
     }
 
     return (

@@ -172,8 +172,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     };
 
     const clearCategoryFilter = () => {
-    setFilterState(prev => ({ ...prev, categories: [] }));
-};
+        setFilterState(prev => ({ ...prev, categories: [] }));
+    };
 
     const setClassFilter = (classItems: Class[] | null) => {
         if (!classItems) {
@@ -184,13 +184,14 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         setFilterState(prev => {
             return {
                 ...prev,
-                classes: classItems};
+                classes: classItems
+            };
         });
     };
 
     const clearClassFilter = () => {
-    setFilterState(prev => ({ ...prev, classes: [] }));
-};
+        setFilterState(prev => ({ ...prev, classes: [] }));
+    };
 
     const value: LanguageContextType = useMemo(
         () => ({
@@ -206,7 +207,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
             setTargetLanguage,
             refreshVocabulary,
             setLanguages,
-            setCategoryFilter, 
+            setCategoryFilter,
             clearCategoryFilter,
             setClassFilter,
             clearClassFilter

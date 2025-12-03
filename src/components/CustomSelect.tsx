@@ -70,21 +70,19 @@ const CustomSelect = ({
         }
     }, [value, options])
 
-    // TODO: Accessability: Handle keyboard events
+    // TODO: Accessibility: Handle keyboard events
 
     function handleSelect(optionValue: SelectOption) {
         if (activeOptions.find((active) => active.value === optionValue.value)) {
-            console.log("Deselecting", optionValue);
-            const selectedValues = activeOptions.filter(active => active.value !== optionValue.value);
-            setActiveOptions(selectedValues);
+            const selectedValues = activeOptions.filter(active => active.value !== optionValue.value); 
+            setActiveOptions(selectedValues); 
+            (onChange as (value: SelectOption[]) => void)(selectedValues);
         } else if (multiSelect) {
-            console.log("Selecting", optionValue);
-            const selectedValues = activeOptions.some(option => option.value === optionValue.value) ? activeOptions.filter(val => val.value !== optionValue.value) :
-                [...activeOptions, optionValue];
+            const selectedValues = [...activeOptions, optionValue];
             setActiveOptions(selectedValues);
             (onChange as (value: SelectOption[]) => void)(selectedValues);
         } else {
-            setActiveOptions([optionValue])
+            setActiveOptions([optionValue]);
             setIsOpen(false);
             (onChange as (value: SelectOption) => void)(optionValue);
         }
@@ -105,26 +103,30 @@ const CustomSelect = ({
                 type="button"
                 className={`${styles.customSelectButton} ${outline ? styles.outlined : ""}`}
                 onClick={() => setIsOpen(!isOpen)}
-                disabled={false}
                 aria-haspopup="listbox"
                 aria-expanded={isOpen}>
                 <span>{placeHolderText()}</span>
                 <Arrow className={`${styles.arrow} ${isOpen ? styles.arrowOpen : ""}`} />
             </button>
             {isOpen && (
-                <div className={`${styles.dropDownList} ${outline ? styles.outlined : ""}`}>
+                <div 
+                    className={`${styles.dropDownList} ${outline ? styles.outlined : ""}`}
+                    role="listbox"
+                >
                     {sortedOptions.map((option) => (
                         <label
                             key={option.value}
                             className={styles.option}
+                            role="option"
+                            aria-selected={activeOptions.find((active) => active.value === option.value) ? true : false}
                         >
                             {multiSelect ? (
                                 <input
                                     type="checkbox"
                                     className={styles.checkBox}
                                     value={option.value}
-                                    checked={activeOptions.find((active) => active.value === option.value) ? true : false}
-                                    onClick={() => handleSelect(option)}
+                                    checked={!!activeOptions.find((active) => active.value === option.value)}
+                                    onChange={() => handleSelect(option)}
                                 />
                             ) : (
                                 <input
