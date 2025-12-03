@@ -1,16 +1,32 @@
+import { useEffect, useState } from 'react';
 import { useLanguage } from '../LanguageContext';
+import type { SelectOption } from './CustomSelect';
 import styles from './LanguageBar.module.css'
+import CustomSelect from './CustomSelect';
 
 const LanguageBar = () => {
     const { availableLanguages, sourceLanguage, targetLanguage, isLoadingLanguages, setLanguages } = useLanguage();
+    const [languageOptions, setLanguageOptions] = useState<SelectOption[]>([]);
 
-    const selectSourceLanguage = (languageId: string) => {
-        setLanguages(languageId, targetLanguage);
-        return;
+
+    useEffect(() => {
+        if (availableLanguages && availableLanguages.length) {
+            const options = availableLanguages.map((language) => ({
+                value: language._id,
+                label: language.name
+            }));
+            setLanguageOptions(options);
+        }
+    }, [availableLanguages]);
+
+    const selectSourceLanguage = (language: SelectOption) => {
+        if (!language) return;
+        setLanguages(language.value, targetLanguage);
     }
 
-    const selectTargetLanguage = (languageId: string) => {
-        setLanguages(sourceLanguage, languageId);
+    const selectTargetLanguage = (language: SelectOption) => {
+        if (!language) return;
+        setLanguages(sourceLanguage, language.value);
     }
 
     return (
@@ -19,21 +35,20 @@ const LanguageBar = () => {
                 <h2> Loading languages...</h2>
             ) : (
                 <>
-                    <div className={styles.languageDropdown}>
-                        <select className={styles.hiddenInput} onChange={(e) => selectSourceLanguage(e.target.value)} name="sourceLanguage" id="sourceLanguage" value={sourceLanguage}>
-                            {availableLanguages?.map((language) => (
-                                <option key={language._id} className={styles.option} value={language._id}>{language.name}</option>
-                            ))}
-                        </select>
-                    </div>
-                    <h2>to</h2>
-                    <div className={styles.languageDropdown}>
-                        <select className={styles.hiddenInput} onChange={(e) => selectTargetLanguage(e.target.value)} name="targetLanguage" id="targetLanguage" value={targetLanguage}>
-                            {availableLanguages?.map((language) => (
-                                <option key={language._id} value={language._id}>{language.name}</option>
-                            ))}
-                        </select>
-                    </div>
+                    <CustomSelect
+                        options={languageOptions}
+                        value={sourceLanguage || null}
+                        onChange={selectSourceLanguage}
+                        placeHolder={sourceLanguage ? languageOptions.find(lang => lang.value === sourceLanguage)?.label : "Source language"}
+                        size='large'
+                    />
+                    <CustomSelect
+                        options={languageOptions}
+                        value={targetLanguage || null}
+                        onChange={selectTargetLanguage}
+                        placeHolder={targetLanguage ? languageOptions.find(lang => lang.value === targetLanguage)?.label : "Target language"}
+                        size='large'
+                    />
                 </>
             )}
         </div>

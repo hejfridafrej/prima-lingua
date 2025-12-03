@@ -1,12 +1,17 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
-import { translationService, wordService, type Translation, type Language, type Word, languageService } from './services/api.ts';
+import { wordService, type Word, type Translation, translationService, type Language, languageService, type Category, type Class } from './services/api.ts';
 import { ApiError, TranslationsNotFoundError, NoMatchingTranslationsError } from './errors.ts';
 
+interface FilterState {
+    categories: Category[];
+    classes: Class[];
+}
 interface LanguageContextType {
     availableLanguages: Language[] | null;
     sourceLanguage: string; // TODO: Change to Language?
     targetLanguage: string;
     vocabulary: VocabularyItem[];
+    filterState: FilterState;
     isLoadingVocabulary: boolean;
     isLoadingLanguages: boolean;
     error: string | null;
@@ -14,12 +19,18 @@ interface LanguageContextType {
     setTargetLanguage: (lang: string) => void;
     refreshVocabulary: () => Promise<void>;
     setLanguages: (source: string, target: string) => void;
+    setCategoryFilter: (filter: Category[] | null) => void;
+    clearCategoryFilter: () => void;
+    setClassFilter: (filter: Class[] | null) => void;
+    clearClassFilter: () => void;
+
 }
 
 export interface VocabularyItem extends Word {
     sourceTranslation: Translation;
     targetTranslation: Translation;
 }
+
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
@@ -32,6 +43,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         () => localStorage.getItem('targetLanguage') || '68e6b3b7db3b5d40c552cae7'
     );
     const [vocabulary, setVocabulary] = useState<VocabularyItem[]>([]);
+    const [filterState, setFilterState] = useState<FilterState>({ categories: [], classes: [] });
     const [isInitialized, setIsInitialized] = useState(false);
     const [isLoadingLanguages, setIsLoadingLanguages] = useState(false);
     const [isLoadingVocabulary, setIsLoadingVocabulary] = useState(false);
@@ -146,24 +158,65 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('targetLanguage', target);
     };
 
+    const setCategoryFilter = (category: Category[] | null) => {
+        if (!category) {
+            setFilterState(prev => ({ ...prev, categories: [] }));
+            return;
+        }
+
+        setFilterState(prev => {
+            return {
+                ...prev, categories: category
+            };
+        });
+    };
+
+    const clearCategoryFilter = () => {
+        setFilterState(prev => ({ ...prev, categories: [] }));
+    };
+
+    const setClassFilter = (classItems: Class[] | null) => {
+        if (!classItems) {
+            setFilterState(prev => ({ ...prev, classes: [] }));
+            return;
+        }
+
+        setFilterState(prev => {
+            return {
+                ...prev,
+                classes: classItems
+            };
+        });
+    };
+
+    const clearClassFilter = () => {
+        setFilterState(prev => ({ ...prev, classes: [] }));
+    };
+
     const value: LanguageContextType = useMemo(
         () => ({
             availableLanguages,
             sourceLanguage,
             targetLanguage,
             vocabulary,
+            filterState,
             isLoadingVocabulary,
             isLoadingLanguages,
             error,
             setSourceLanguage,
             setTargetLanguage,
             refreshVocabulary,
-            setLanguages
+            setLanguages,
+            setCategoryFilter,
+            clearCategoryFilter,
+            setClassFilter,
+            clearClassFilter
         }), [
         availableLanguages,
         sourceLanguage,
         targetLanguage,
         vocabulary,
+        filterState,
         isLoadingVocabulary,
         isLoadingLanguages,
         error

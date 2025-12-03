@@ -27,8 +27,8 @@ export interface Category {
 export interface Word {
   _id: string;
   identifier: string;
-  class?: Class | null;
-  category?: Category | null;
+  class: Class;
+  category: Category;
 }
 
 export interface Translation {
@@ -90,6 +90,28 @@ export const languageService = {
   },
   getLanguageById: async (language: string): Promise<Language> => {
     const response = await api.get<Language>(`/languages/${language}`);
+    return response.data;
+  }
+}
+
+export const categoryService = {
+  getAllCategories: async (): Promise<Category[]> => {
+    const response = await api.get<Category[]>('/categories');
+    return response.data;
+  },
+  getCategoryById: async (category: Category): Promise<Category> => { // TODO: It's... weird to fetch a category I already have
+    const response = await api.get<Category>(`/categories/${category._id}`);
+    return response.data;
+  }
+}
+
+export const classService = {
+  getAllClasses: async (): Promise<Class[]> => {
+    const response = await api.get<Class[]>('/classes');
+    return response.data;
+  },
+  getClassById: async (singleClass: Class): Promise<Class> => {
+    const response = await api.get<Class>(`/classes/${singleClass._id}`);
     return response.data;
   }
 }

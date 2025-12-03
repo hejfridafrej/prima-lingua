@@ -1,0 +1,111 @@
+.customSelectContainer {
+  position: relative;
+  background-color: transparent;
+  width: 10rem;
+  height: 2.5rem;
+  margin: 0.5rem;
+}
+
+.small {
+  width: 8rem;
+}
+
+.large {
+  width: 12rem;
+}
+
+.customSelectButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 2.5rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  background-color: var(--color-primary-dark);
+  cursor: pointer;
+  font-size: 1rem;
+  text-align: left;
+
+  span {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+.arrow {
+  fill: var(--color-accent);
+  height: 1rem;
+  transform: rotate(0deg);
+  transition-duration: 0.3s;
+}
+
+.arrowOpen {
+  transform: rotate(90deg);
+  transition-duration: 0.3s;
+}
+
+.dropDownList {
+  background-color: var(--color-primary-dark);
+  position: absolute;
+  top: calc(100%);
+  left: 0;
+  right: 0;
+  border-radius: 4px;
+  list-style: none;
+  padding: 0rem 0rem;
+  margin: 0;
+  max-height: 200px;
+  min-width: fit-content;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dropDownList::-webkit-scrollbar {
+  display: none;
+}
+
+.outlined {
+  border: 0.5px solid var(--color-accent-dark);
+}
+
+.outlined:hover {
+  border: 0.5px solid var(--color-accent);
+}
+
+
+.option {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+
+  input {
+    margin-right: 0.5rem;
+  }
+}
+
+.option:hover {
+  background-color: var(--color-primary);
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--color-accent-dark);
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--color-accent-dark);
+  border-color: var(--color-accent-dark);
+}
+
+input[type="radio"] {
+  display: none;
+}

@@ -9,7 +9,7 @@
     height: 5rem;
     padding: 1rem;
     box-shadow: var(--shadow-lg);
-    background-color: rgb(from var(--color-primary-dark) r g b / 0.5);
+    background-color: var(--color-primary-dark);
     transition-delay: 0.3s;
     transition-property: transform, transition-duration;
     p {

@@ -4,7 +4,7 @@ import styles from "./Header.module.css";
 
 function Header() {
   return (
-    <div className={styles.header}>
+    <div className={styles.headerBar}>
       <div className={styles.appName}>
       <h1> Prima</h1>
       <h1>Lingua</h1>

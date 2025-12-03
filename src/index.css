@@ -14,7 +14,7 @@
   font-style: normal;
 
   /* Primary Colors */
-  --color-primary: #800020;
+  --color-primary: #6f0620;
   --color-primary-light: #A0304C;
   --color-primary-dark: #5A0016;
 
@@ -95,6 +95,9 @@ h2 {
 }
 
 button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 2rem;
   border: none;
   padding: 0.6em 1.2em;
@@ -105,8 +108,12 @@ button {
   color: var(--color-accent);
   cursor: pointer;
   box-shadow: var(--shadow-md);
--webkit-box-shadow: var(--shadow-md);
--moz-box-shadow: var(--shadow-md);
+  -webkit-box-shadow: var(--shadow-md);
+  -moz-box-shadow: var(--shadow-md);
+  svg {
+    fill: var(--color-accent);
+    height: 1rem;
+  }
 }
 
 button:hover {
