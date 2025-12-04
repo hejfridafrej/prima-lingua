@@ -1,21 +1,23 @@
+.vocabularyContainer {
+  margin-top: 2rem;
+}
+
 .vocabularyBox::-webkit-scrollbar {
   display: none;
 }
 
 .vocabularyBox {
   display: flex;
-  flex: 1;
+  height: 100%;
   flex-direction: column;
   justify-content: start;
   align-items: center;
   width: var(--width-content);
   overflow: scroll;
-  height: 100%; /* TODO: This should be solved with flex?*/
 }
 
 .wordGrid {
-    display: grid;
-  grid-template-columns: 14rem 14rem 14rem; /* 2 columns */
+  display: grid;
+  grid-template-columns: 14rem 14rem 14rem; /* 3 columns */
   grid-gap: 1rem;
-
 }

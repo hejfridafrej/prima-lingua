@@ -7,11 +7,17 @@
     height: 100vh; 
     overflow: hidden;
 }
-.header, .footer {
-  flex-shrink: 0;
+
+.header {
+  height: 6rem;
+}
+
+.footer {
+  height: 4rem;
 }
 
 .pageContent {
+  display: flex;
   flex: 1;
-  overflow: auto;
+  overflow: hidden;
 }

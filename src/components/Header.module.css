@@ -4,15 +4,38 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    height: 100%;
     background-color: var(--color-primary-dark);
     width: 100vw;
+    padding: 0.5rem 1rem;
+}
+.leftSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex: 1;
+}
+
+.centerSection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.rightSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex: 1;
 }
 
 .appName {
     display: flex;
     flex-direction: column;
+    margin-left: 0.9rem;
     h1 {
-        padding: 0px;
-        margin: 0px;
+        margin: -0.4rem;
     }
 }
