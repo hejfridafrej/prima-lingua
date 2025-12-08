@@ -107,9 +107,9 @@ button {
   background-color: var(--color-primary-dark);
   color: var(--color-accent);
   cursor: pointer;
-  box-shadow: var(--shadow-md);
+  /* box-shadow: var(--shadow-md);
   -webkit-box-shadow: var(--shadow-md);
-  -moz-box-shadow: var(--shadow-md);
+  -moz-box-shadow: var(--shadow-md); */
   svg {
     fill: var(--color-accent);
     height: 1rem;
