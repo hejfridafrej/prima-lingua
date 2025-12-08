@@ -1,22 +1,73 @@
 
-.header {
+.headerBar {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    height: 100%;
     background-color: var(--color-primary-dark);
     width: 100vw;
-    h1 {
-        margin: 1vw;
-        padding: 1vw;
-    }
+    padding: 0.5rem 1rem;
+}
+.leftSection {
+    order: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex: 1;
+}
+
+.centerSection {
+    order: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.rightSection {
+    order: 3;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex: 1;
 }
 
 .appName {
     display: flex;
     flex-direction: column;
+    margin-left: 0.9rem;
     h1 {
-        padding: 0px 1rem;
-        margin: 0px;
+        margin: -0.4rem;
+    }
+
+
+}
+
+@media (max-width: 768px) {
+    .headerBar {
+        flex-direction: column;
+        height: auto;
+    }
+    .leftSection {
+        order: 1;
+    }
+    .rightSection {
+        order: 2;
+        flex-direction: column;
+    }
+    .centerSection {
+        order: 3;
+    }
+    .jointSection {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+    h1 {
+        font-size: 2.5rem
     }
 }

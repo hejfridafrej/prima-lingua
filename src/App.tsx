@@ -15,13 +15,13 @@ function App() {
           <Header />
         </div>
 
-          <div className={styles.pageContent}>
-        <Routes>
-            <Route path="" element={<Vocabulary />} />
-            <Route path="/languages" element={<LanguagePage />} />
-            <Route path="/about" element={<AboutPage />} />
-        </Routes>
-          </div>
+        <div className={styles.pageContent}>
+          <Routes>
+              <Route path="" element={<Vocabulary />} />
+              <Route path="/languages" element={<LanguagePage />} />
+              <Route path="/about" element={<AboutPage />} />
+          </Routes>
+        </div>
 
         <div className={styles.footer}>
           <Footer />

@@ -1,0 +1,16 @@
+.filterBar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.clearButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0.5rem;
+}
