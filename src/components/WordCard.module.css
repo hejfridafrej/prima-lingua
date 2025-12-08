@@ -1,13 +1,11 @@
 .wordCard {
     display: flex;
-    position: relative;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     border-radius: 0.5rem;
-    width: 12rem;
-    height: 5rem;
-    padding: 1rem;
+    width: 100%;
+    height: 100%;
     box-shadow: var(--shadow-lg);
     background-color: var(--color-primary-dark);
     transition-delay: 0.3s;

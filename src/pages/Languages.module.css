@@ -1,25 +1,51 @@
 .languagePage::-webkit-scrollbar {
   display: none;
 }
+
 .languagePage {
+  margin-top: 2rem;
   display: flex;
-  flex: 1;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: var(--width-content);
+  overflow: scroll;
+  padding-bottom: 2rem;
+}
+
+.languageBox {
+  display: flex;
+  height: 100%;
+  width: var(--width-content);
+  flex-direction: column;
+  align-items: center;
   overflow: scroll;
 }
 
 .languageGrid {
   display: grid;
-  grid-template-columns: 22rem 22rem; /* 2 columns */
-  grid-gap: 20px;
+  width: 100%;
+  grid-template-columns: 1fr 1fr; /* 2 columns */
+  grid-template-rows: repeat(auto-fill, 12rem);
+  grid-gap: 1rem;
 }
 
 .languageInfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .languageBox {
+    width: 90vw;
+  }
+
+  .languageGrid {
+    width: 100%;
+    justify-items: center;
+    grid-template-columns: 1fr; /* 1 column */
+    grid-template-rows: repeat(auto-fill, 1fr);
+  }
 }

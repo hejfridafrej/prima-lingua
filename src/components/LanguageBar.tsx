@@ -40,14 +40,14 @@ const LanguageBar = () => {
                         value={sourceLanguage || null}
                         onChange={selectSourceLanguage}
                         placeHolder={sourceLanguage ? languageOptions.find(lang => lang.value === sourceLanguage)?.label : "Source language"}
-                        size='large'
+                        size='small'
                     />
                     <CustomSelect
                         options={languageOptions}
                         value={targetLanguage || null}
                         onChange={selectTargetLanguage}
                         placeHolder={targetLanguage ? languageOptions.find(lang => lang.value === targetLanguage)?.label : "Target language"}
-                        size='large'
+                        size='small'
                     />
                 </>
             )}

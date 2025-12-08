@@ -29,15 +29,15 @@ function Vocabulary() {
   }, [filterState, vocabulary])
 
   return (
-    <div className={styles.vocabularyContainer}>
-      {isLoadingVocabulary ? (
-        <h2>Loading vocabulary...</h2>
-      ) :
-        error ? (<h3>Error: {error}</h3>) : (
-          <>
-            <FilterBar />
-            <div className={styles.vocabularyBox}>
-              {filteredVocab.length ? (
+    <div className={styles.vocabularyPage}>
+      {error ? (<h3>Error: {error}</h3>) : (
+        <>
+          <FilterBar />
+          <div className={styles.vocabularyBox}>
+            {isLoadingVocabulary ? (
+              <h2>Loading vocabulary...</h2>
+            ) :
+              filteredVocab.length ? (
                 <div className={styles.wordGrid}>
                   {filteredVocab.map((word) => (
                     <WordCard key={word._id} word={word} />
@@ -45,10 +45,12 @@ function Vocabulary() {
                 </div>
               ) : (
                 <h3>No words found</h3>
-              )}
-            </div>
-          </>
-        )
+              )
+
+            }
+          </div>
+        </>
+      )
       }
     </div>
   )

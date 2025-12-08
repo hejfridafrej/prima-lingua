@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { categoryService, type Category, classService, type Class } from '../services/api';
 import { useLanguage } from '../LanguageContext';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 import CustomSelect from './CustomSelect';
 import type { SelectOption } from './CustomSelect';
 import Close from "../assets/close.svg?react"
@@ -14,6 +15,8 @@ const FilterBar = () => {
     const [classes, setClasses] = useState<Class[]>([]);
     const [classOptions, setClassOptions] = useState<SelectOption[]>([]);
     const selectedClassValues = filterState.classes.map(c => c.name);
+    const isMobile = useMediaQuery('(max-width: 768px)');
+    const selectSize = isMobile ? 'small' : 'medium';
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -51,7 +54,6 @@ const FilterBar = () => {
         fetchClasses();
     }, []);
 
-
     const filterOnCategory = (selectedCategories: SelectOption[]) => {
         const categoryArray: Category[] = categories.filter(category => {
             const categoryMatch = selectedCategories.some(cat => cat.label === category.name);
@@ -81,6 +83,7 @@ const FilterBar = () => {
                 onChange={filterOnCategory}
                 placeHolder={"Category"}
                 multiSelect
+                size={selectSize}
             />
             <CustomSelect
                 options={classOptions}
@@ -88,6 +91,7 @@ const FilterBar = () => {
                 onChange={filterOnClass}
                 placeHolder={"Class"}
                 multiSelect
+                size={selectSize}
             />
             <button className={styles.clearButton} onClick={() => clearFilters()}><Close /></button> {/* TODO: Add icon button */}
         </div>

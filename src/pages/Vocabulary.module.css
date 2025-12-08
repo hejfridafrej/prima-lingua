@@ -1,5 +1,8 @@
-.vocabularyContainer {
+.vocabularyPage {
+  display: flex;
+  flex-direction: column;
   margin-top: 2rem;
+  justify-content: flex-start;
 }
 
 .vocabularyBox::-webkit-scrollbar {
@@ -10,14 +13,26 @@
   display: flex;
   height: 100%;
   flex-direction: column;
-  justify-content: start;
-  align-items: center;
   width: var(--width-content);
+  align-items: center;
   overflow: scroll;
 }
 
 .wordGrid {
   display: grid;
-  grid-template-columns: 14rem 14rem 14rem; /* 3 columns */
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr; /* 3 columns */
+  grid-auto-rows: 8rem;
   grid-gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .vocabularyBox {
+    width: 90vw;
+  }
+  .wordGrid {
+  grid-template-columns: 1fr 1fr; /* 1 columns */
+  grid-auto-rows: 6rem;
+}
 }

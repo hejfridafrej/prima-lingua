@@ -12,7 +12,6 @@ const Languages = () => {
         setLoading(true);
         try {
             setLanguages(availableLanguages);
-            // Fetching is now handled in LanguageContext
         } catch (error) {
             console.error("Error loading languages:", error);
         }
@@ -21,19 +20,18 @@ const Languages = () => {
     return (
         <div className={styles.languagePage}>
             <h2>Available languages</h2>
-            {loading ? <h3>Loading languages...</h3> :
-                languages ? (
-                    <div className={styles.languageGrid}>
-
-                    {
-                            languages.map((lang) => (
-                                <LanguageCard key={lang._id} language={lang} />
-                            ))
-                        }
-                    </div>
-                )
-
-                    : (<h3>No languages available</h3>)}
+            <div className={styles.languageBox}>
+                {loading ? <h3>Loading languages...</h3> :
+                    languages ? (
+                        <div className={styles.languageGrid}>
+                            {
+                                languages.map((lang) => (
+                                    <LanguageCard key={lang._id} language={lang} />
+                                ))
+                            }
+                        </div>
+                    ) : (<h3>No languages available</h3>)}
+            </div>
         </div>
 
     )

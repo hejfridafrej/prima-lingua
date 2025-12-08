@@ -25,6 +25,7 @@ const LanguageItem = ({ language }: LanguageCardProps) => {
 
     return (
         <div key={language.name} className={styles.languageCard}>
+            <div className={styles.languageInfo}>
             <div className={styles.languageNames}>
             <h2>{language.name}</h2>
             <h4>{language?.native_name}</h4>
@@ -32,6 +33,7 @@ const LanguageItem = ({ language }: LanguageCardProps) => {
             <ProgressBar segmented={true} progress={translations.length} total={words.length} />
             <p>{translations.length} of {words.length} words translated</p>
             {/* <button disabled>Contribute</button>  */} {/* Future feature */}
+            </div>
         </div>
 
     )
